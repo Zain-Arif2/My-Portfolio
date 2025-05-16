@@ -1,6 +1,8 @@
 import React from 'react';
 import { FaMapMarkerAlt, FaBriefcase, FaGlobe, FaGithub, FaLinkedin, FaTwitter, FaEnvelope } from 'react-icons/fa';
-import Profile from '../assets/profile.png';
+import profile from '../assets/profile.png';
+
+
 
 function Hero() {
   return (
@@ -8,7 +10,7 @@ function Hero() {
 
       {/* Profile Card */}
       <div className=" bg-[#1A1E23] border-l-4 border-[#12F7D6] rounded-[20px] p-8 w-[360px] text-center shadow-[0_4px_10px_rgba(0,0,0,0.5)] mb-10 lg:mb-0 lg:mr-10">
-        <img src={Profile} alt="Zain-Arif" className="w-[90px] h-[90px] rounded-full mx-auto mb-4" />
+        <img src={profile} alt="Zain-Arif" className="w-[90px] h-[90px] rounded-full mx-auto mb-4" />
         <p className="text-[#bbb] text-base pt-2">Front-End Developer</p>
         <ul className="text-[#aaa] text-[15px] mt-4 space-y-2">
           <li className="flex items-center justify-center gap-2"><FaEnvelope className="text-[#12F7D6]" /> arifzain249@gmail.com</li>
