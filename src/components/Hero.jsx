@@ -1,16 +1,12 @@
 import React from 'react';
 import { FaMapMarkerAlt, FaBriefcase, FaGlobe, FaGithub, FaLinkedin, FaTwitter, FaEnvelope } from 'react-icons/fa';
-import profile from '../assets/profile.png';
-
-
 
 function Hero() {
   return (
     <section className="bg-[#292F36] py-[150px] pt-[204px] px-4 sm:px-10 lg:px-32 flex flex-wrap justify-center items-center relative text-left">
-
       {/* Profile Card */}
-      <div className=" bg-[#1A1E23] border-l-4 border-[#12F7D6] rounded-[20px] p-8 w-[360px] text-center shadow-[0_4px_10px_rgba(0,0,0,0.5)] mb-10 lg:mb-0 lg:mr-10">
-        <img src={profile} alt="Zain-Arif" className="w-[90px] h-[90px] rounded-full mx-auto mb-4" />
+      <div className="bg-[#1A1E23] border-l-4 border-[#12F7D6] rounded-[20px] p-8 w-[360px] text-center shadow-[0_4px_10px_rgba(0,0,0,0.5)] mb-10 lg:mb-0 lg:mr-10">
+      <img src="/src/assets/profile.png" alt="Zain-Arif" className="w-[90px] h-[90px] rounded-full mx-auto mb-4" />
         <p className="text-[#bbb] text-base pt-2">Front-End Developer</p>
         <ul className="text-[#aaa] text-[15px] mt-4 space-y-2">
           <li className="flex items-center justify-center gap-2"><FaEnvelope className="text-[#12F7D6]" /> arifzain249@gmail.com</li>
@@ -30,7 +26,7 @@ function Hero() {
           ))}
         </div>
         <a
-          href="/public/cv/Zain_Arif_CV.pdf"
+          href="/cv/Zain_Arif_CV.pdf"
           download
           className="inline-block"
         >
@@ -60,7 +56,6 @@ function Hero() {
         <p className="font-mono text-[#12F7D6] text-base">&lt;/p&gt;</p>
         <a href="mailto:arifzain249@gmail.com" className="ml-5 text-[#12F7D6] font-bold text-[1.9rem] inline-flex items-center gap-2 hover:text-[#0fdcc4] transition">
           Let’s Talk <FaEnvelope className="text-[#292F36] bg-[#12F7D6] p-3 rounded-full text-5xl hover:bg-[#0ec2b1] transition-transform transform hover:scale-110" />
-
         </a>
       </div>
 
