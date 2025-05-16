@@ -1,0 +1,9 @@
+/* Import Tailwind first */
+@import "tailwindcss";
+
+/* Import custom font AFTER Tailwind (if you're using @fontsource) */
+@import "@fontsource-variable/ubuntu-sans-mono";
+
+body {
+  font-family: 'Ubuntu Mono', monospace;
+}
