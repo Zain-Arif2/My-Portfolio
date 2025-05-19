@@ -29,7 +29,8 @@ function Hero() {
         ))}
       </div>
       <a
-        href="/public/cv/Zain_Arif_CV.pdf"
+        href="/public/cv/Zain_Arif_CV.pdf
+        "
         download
         className="inline-block"
       >
