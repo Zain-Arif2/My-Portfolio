@@ -1,5 +1,5 @@
 import React from "react";
-import codingImage from "../assets/Image.png"; // Ensure the path is correct
+import codingImage from "/images/Image.png"; // Ensure the path is correct
 
 export default function About() {
   return (

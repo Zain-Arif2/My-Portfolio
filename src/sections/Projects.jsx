@@ -1,9 +1,9 @@
 import { FaGithub } from "react-icons/fa";
-import whitespaceImg from '../assets/Whitespace.png';
-import weatherImg from '../assets/Weather.png';
-import Netflix from '../assets/netflix.png';
-import project4Img from '../assets/Nexcent.png';
-import project5Img from '../assets/Portfolio.png';
+import whitespaceImg from '/images/Whitespace.png';
+import weatherImg from '/images/Weather.png';
+import Netflix from '/images/netflix.png';
+import project4Img from '/images/Nexcent.png';
+import project5Img from '/images/Portfolio.png';
 // import project6Img from '/images/project6.png'; // Replace with actual image path
 
 const projects = [
