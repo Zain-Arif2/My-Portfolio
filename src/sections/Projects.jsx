@@ -25,7 +25,7 @@ const projects = [
     title: "Netflix login Clone",
     description: "A Netflix login page clone built with React and plain CSS, showcasing responsive layout and custom UI replication for portfolio use.",
     image: Netflix,
-    link: "https://netflix-login-clone-git-main-zain-arifs-projects.vercel.app/",
+    link: "https://netflix-login-clone-hcgfsvkz8-zain-arifs-projects.vercel.app/",
     github: "https://github.com/Zain-Arif2/Netflix-Login-Clone",
   },
   {
