@@ -55,7 +55,7 @@ export default function Projects() {
   return (
     <section
     id="projects"
-    className="bg-[#1A1E23] text-white pt-[60px] pb-[60px] sm:pt-[150px] sm:pb-[150px] px-4 sm:px-6 lg:px-24"
+    className="bg-[#1A1E23] text-white pt-[60px] pb-[60px] sm:pt-[150px] sm:pb-[150px] px-4 sm:px-6 lg:px-38"
   >
   
   <div className="text-center mb-12 px-4 sm:px-6 lg:px-0">

@@ -5,7 +5,7 @@ export default function About() {
   return (
     <section
     id="about"
-    className="bg-[#1A1E23] text-gray-300 px-4 py-[60px] md:px-[192px] md:py-[150px]"
+    className="bg-[#1A1E23] text-gray-300 px-4 py-[60px] md:px-[187px] md:py-[150px]"
   >
   
       <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-center lg:items-start gap-12">

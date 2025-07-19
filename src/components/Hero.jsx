@@ -8,7 +8,7 @@ function Hero() {
     <section className="bg-[#292F36] py-[150px] pt-[204px] px-4 sm:px-10 lg:px-32 flex flex-wrap justify-center items-center relative text-left">
 
       {/* Profile Card */}
-      <div className="bg-[#1A1E23] border-l-4 border-[#12F7D6] rounded-[20px] p-8 w-[360px] text-center shadow-[0_4px_10px_rgba(0,0,0,0.5)] mb-10 lg:mb-0 lg:mr-10">
+      <div className="bg-[#1A1E23] border-l-4 border-[#12F7D6] rounded-[20px] p-8 w-[353px] text-center shadow-[0_4px_10px_rgba(0,0,0,0.5)] mb-10 lg:mb-0 lg:mr-10">
         <img src={ProfileImg} alt="Zain-Arif" className="w-[90px] h-[90px] rounded-full mx-auto mb-4" />
         <p className="text-[#bbb] text-base pt-2">Front-End Developer</p>
 

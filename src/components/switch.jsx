@@ -47,7 +47,7 @@ const StyledWrapper = styled.div`
     padding: 0;
     margin: 0;
     box-sizing: border-box;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: 'Ubuntu Mono', monospace;
     display: flex;
     justify-content: center;
     align-items: center;

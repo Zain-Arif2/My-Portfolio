@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import styled from "styled-components";
 import logo from "/images/logo.png";
 
 const Header = () => {
@@ -16,161 +15,65 @@ const Header = () => {
 
   return (
     <>
-      <Wrapper isScrolled={isScrolled}>
-        <Logo href="#home">
-          <img src={logo} alt="Logo" />
-        </Logo>
+      <header
+        className={`fixed top-2 left-1/2 transform -translate-x-1/2 z-[1002] w-[95%] max-w-[1115px] flex items-center justify-between py-4 px-4 w-full backdrop-blur-lg transition-colors duration-300 ${
+          isScrolled ? "bg-[rgba(41,47,54,0.8)]"  : "bg-[rgba(41,47,54,0.6)]" 
+        }`}
+      >
+        <a href="#home">
+          <img src={logo} alt="Logo" className="w-12 h-12 object-contain" />
+        </a>
 
-        <Hamburger onClick={() => setMenuOpen(!menuOpen)} menuOpen={menuOpen}>
-          <span />
-          <span />
-          <span />
-        </Hamburger>
+        <div
+          className="flex-col gap-[5px] cursor-pointer z-[1004] hidden max-[1024px]:flex"
+          onClick={() => setMenuOpen(!menuOpen)}
+        >
+          <span
+            className={`block w-[26px] h-[3px] bg-white rounded transition-all duration-300 ${
+              menuOpen ? "rotate-45 translate-y-[8px]" : ""
+            }`}
+          />
+          <span
+            className={`block w-[26px] h-[3px] bg-white rounded transition-all duration-300 ${
+              menuOpen ? "opacity-0" : ""
+            }`}
+          />
+          <span
+            className={`block w-[26px] h-[3px] bg-white rounded transition-all duration-300 ${
+              menuOpen ? "-rotate-45 -translate-y-[8px]" : ""
+            }`}
+          />
+        </div>
 
-        <Nav menuOpen={menuOpen}>
+        <nav
+          className={`flex gap-10 max-[1024px]:fixed max-[1024px]:top-0 max-[1024px]:right-0 max-[1024px]:h-screen max-[1024px]:w-full max-[1024px]:bg-[rgba(41,47,54,0.95)] max-[1024px]:backdrop-blur-lg max-[1024px]:flex-col max-[1024px]:justify-center max-[1024px]:items-center max-[1024px]:gap-8 transform transition-transform duration-300 z-[1003] ${
+            menuOpen ? "max-[1024px]:translate-x-0" : "max-[1024px]:translate-x-full"
+          }`}
+        >
           {["Home", "About", "Tech Stack", "Projects", "Contact"].map(
             (item, idx) => (
-              <NavLink
+              <a
                 key={idx}
                 href={`#${item.toLowerCase().replace(" ", "")}`}
                 onClick={() => setMenuOpen(false)}
+                className="relative text-white text-lg py-2 px-4 text-center hover:text-[#12f7d6] group"
               >
                 {item}
-                <Underline />
-              </NavLink>
+                <span className="absolute left-0 bottom-0 h-[2px] w-0 bg-[#12f7d6] transition-all duration-300 group-hover:w-full"></span>
+              </a>
             )
           )}
-        </Nav>
-      </Wrapper>
+        </nav>
+      </header>
 
-      <Overlay menuOpen={menuOpen} onClick={() => setMenuOpen(false)} />
+      <div
+        className={`${
+          menuOpen ? "block" : "hidden"
+        } fixed top-0 left-0 h-screen w-screen bg-[rgba(0,0,0,0.4)] backdrop-blur-sm z-[1001]`}
+        onClick={() => setMenuOpen(false)}
+      ></div>
     </>
   );
 };
-
-const Wrapper = styled.header`
-  position: fixed;
-  top: 16px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 1002;
-  width: 95%;
-  max-width: 1100px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 1rem 1.5rem;
-  border-radius: 9999px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  background: ${({ isScrolled }) =>
-    isScrolled ? "rgba(41, 47, 54, 0.8)" : "rgba(41, 47, 54, 0.6)"};
-  backdrop-filter: blur(10px);
-  transition: background 0.3s ease;
-`;
-
-const Logo = styled.a`
-  img {
-    width: 48px;
-    height: 48px;
-    object-fit: contain;
-  }
-`;
-
-const Nav = styled.nav`
-  display: flex;
-  gap: 2.5rem;
-
-  @media (max-width: 1024px) {
-    position: fixed;
-    top: 0;
-    right: 0;
-    height: 100vh;
-    width: 100%; /* updated to full width */
-    background: rgba(41, 47, 54, 0.95);
-    backdrop-filter: blur(10px);
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 2rem;
-    transform: ${({ menuOpen }) =>
-      menuOpen ? "translateX(0)" : "translateX(100%)"};
-    transition: transform 0.3s ease-in-out;
-    z-index: 1003;
-  }
-`;
-
-const NavLink = styled.a`
-  position: relative;
-  color: white;
-  font-size: 1.125rem;
-  padding: 0.5rem 1rem;
-  cursor: pointer;
-  text-align: center;
-
-  &:hover {
-    color: #12f7d6;
-  }
-
-  &:hover span {
-    width: 100%;
-  }
-`;
-
-const Underline = styled.span`
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  height: 2px;
-  width: 0;
-  background-color: #12f7d6;
-  transition: width 0.3s ease;
-`;
-
-const Hamburger = styled.div`
-  display: none;
-  flex-direction: column;
-  gap: 5px;
-  cursor: pointer;
-  z-index: 1004;
-
-  span {
-    display: block;
-    width: 26px;
-    height: 3px;
-    background: white;
-    border-radius: 2px;
-    transition: all 0.3s ease-in-out;
-  }
-
-  ${({ menuOpen }) =>
-    menuOpen &&
-    `
-    span:nth-child(1) {
-      transform: rotate(45deg) translateY(8px);
-    }
-    span:nth-child(2) {
-      opacity: 0;
-    }
-    span:nth-child(3) {
-      transform: rotate(-45deg) translateY(-8px);
-    }
-  `}
-
-  @media (max-width: 1024px) {
-    display: flex;
-  }
-`;
-
-const Overlay = styled.div`
-  display: ${({ menuOpen }) => (menuOpen ? "block" : "none")};
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 100vh;
-  width: 100vw;
-  background: rgba(0, 0, 0, 0.4);
-  backdrop-filter: blur(4px);
-  z-index: 1001;
-`;
 
 export default Header;
