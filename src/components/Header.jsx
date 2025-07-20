@@ -3,22 +3,28 @@ import logo from "/images/logo.png";
 
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
+  const [showHeader, setShowHeader] = useState(true);
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 0);
+      // Hide header when scrolled down > 0
+      if (window.scrollY > 0) {
+        setShowHeader(false);
+      } else {
+        setShowHeader(true);
+      }
     };
+
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  if (!showHeader) return null; // unmount header when scrolled
+
   return (
     <>
       <header
-        className={`fixed top-2 left-1/2 transform -translate-x-1/2 z-[1002] w-[95%] max-w-[1115px] flex items-center justify-between py-4 px-4 w-full backdrop-blur-lg transition-colors duration-300 ${
-          isScrolled ? "bg-[rgba(41,47,54,0.8)]"  : "bg-[rgba(41,47,54,0.6)]" 
-        }`}
+        className={`fixed top-0 left-1/2 transform -translate-x-1/2 z-[1002] w-[95%] max-w-[1135px] flex items-center justify-between py-6 px-4 backdrop-blur-lg bg-[rgba(41,47,54,0.6)] transition-colors duration-300`}
       >
         <a href="#home">
           <img src={logo} alt="Logo" className="w-12 h-12 object-contain" />
@@ -50,7 +56,7 @@ const Header = () => {
             menuOpen ? "max-[1024px]:translate-x-0" : "max-[1024px]:translate-x-full"
           }`}
         >
-          {["Home", "About", "Tech Stack", "Projects", "Contact"].map(
+          {["Home", "About", "Services", "Projects", "Contact"].map(
             (item, idx) => (
               <a
                 key={idx}

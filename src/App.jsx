@@ -4,6 +4,7 @@ import TechStack from './sections/Techstack'
 import Contact from './sections/Contact'
 import Home from './sections/Home'
 import Projects from './sections/Projects'
+import Services from './sections/Services'
 
 
 function App() {
@@ -11,8 +12,9 @@ function App() {
     <>
       <Home />
       <AboutMe />
-      <TechStack />
+      <Services />
       <Projects />
+      <TechStack />
       <Contact />
     </>
   )

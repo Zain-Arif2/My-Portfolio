@@ -30,14 +30,17 @@ export default function Contact() {
 
   return (
     <section
-      id="contact"
-      className="
-        bg-[#1A1E23] text-white
-        pt-[60px] pb-0
-        sm:pt-0 sm:pb-0
-        px-4 sm:px-8 md:px-16 lg:px-[192px] text-center
-      "
-    >
+    id="contact"
+    className="
+      bg-[#1A1E23] text-white text-center
+      pt-[60px]            /* mobile default */
+      sm:pt-[150px]        /* sm and up */
+      px-4 sm:px-8 md:px-16 lg:px-[192px]
+    "
+  >
+  
+  
+  
       <h2 className="text-3xl md:text-5xl font-bold text-[#12F7D6]">Contact</h2>
 
       <p className="text-md mt-4 text-gray-300">
@@ -123,7 +126,7 @@ export default function Contact() {
 const StyledButtonWrapper = styled.div`
   display: flex;
   justify-content: center;
-  margin-top: 1.5rem;
+  margin-top: 1.5rem;;
   margin-bottom: 1.5rem;
 
   button {
