@@ -1,11 +1,15 @@
-import React, { useState } from "react";
-import styled from "styled-components";
+import React, { useState, memo } from "react";
 import { motion } from "framer-motion";
 import Footer from "../components/Footer";
-import axios from "axios";
-import { FaPaperPlane, FaUser, FaEnvelope, FaCommentDots, FaClock, FaCheckCircle, FaGlobe } from "react-icons/fa";
+import { 
+  FaPaperPlane, 
+  FaUser, 
+  FaEnvelope, 
+  FaCommentDots, 
+  FaCheckCircle 
+} from "react-icons/fa"; // Vite automatic tree-shaking ke sath standard import
 
-export default function Contact() {
+function Contact() {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -22,9 +26,20 @@ export default function Contact() {
     e.preventDefault();
     setSubmitting(true);
     try {
-      await axios.post("http://localhost:5000/send-email", formData);
-      alert("Message sent successfully!");
-      setFormData({ name: "", email: "", message: "" });
+      const response = await fetch("http://localhost:5000/send-email", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        alert("Message sent successfully!");
+        setFormData({ name: "", email: "", message: "" });
+      } else {
+        alert("Failed to send message.");
+      }
     } catch (error) {
       console.error("Error sending email:", error);
       alert("Failed to send message.");
@@ -37,11 +52,11 @@ export default function Contact() {
     <section id="contact" className="relative bg-[#09090b] pt-24 sm:pt-32 pb-12 px-4 sm:px-8 md:px-16 lg:px-24 border-t border-white/5 overflow-hidden">
       
       {/* Ambient Radial Lighting */}
-      <div className="pointer-events-none absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[400px] bg-gradient-to-r from-emerald-500/10 to-cyan-500/10 rounded-full blur-[140px]" />
+      <div className="pointer-events-none absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[400px] bg-gradient-to-r from-emerald-500/10 to-cyan-500/10 rounded-full blur-[140px] transform-gpu" />
 
       <div className="mx-auto max-w-[1140px] text-center relative z-10">
         
-        {/* Availability & Header */}
+        {/* Header */}
         <p className="text-teal-400 font-mono text-xs tracking-widest uppercase mb-3">
           Get In Touch
         </p>
@@ -51,8 +66,6 @@ export default function Contact() {
         <p className="text-muted text-base sm:text-lg mt-4 max-w-[620px] mx-auto leading-relaxed">
           Have a web application, SaaS idea, or project in mind? Send me a message and I will get back to you shortly.
         </p>
-
-        
 
         {/* Form Container */}
         <div className="max-w-3xl mx-auto mt-14 rounded-[32px] border border-white/10 bg-white/[0.025] p-6 sm:p-10 backdrop-blur-2xl shadow-2xl text-left">
@@ -116,23 +129,24 @@ export default function Contact() {
               </div>
             </div>
 
-            {/* Submit Action */}
-            <StyledButtonWrapper className="md:col-span-2 text-center">
+            {/* Submit Button */}
+            <div className="md:col-span-2 flex justify-center mt-4 mb-2">
               <motion.button
                 type="submit"
                 disabled={submitting}
                 aria-label="Send Message"
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
+                className="group relative w-full max-w-[320px] py-3.5 px-8 flex items-center justify-center font-semibold text-[15px] text-[#04120f] bg-gradient-to-r from-emerald-500 to-cyan-400 rounded-[16px] shadow-[0_12px_32px_-10px_rgba(16,185,129,0.4)] hover:shadow-[0_16px_36px_-8px_rgba(16,185,129,0.6)] transition-all duration-300 cursor-pointer overflow-hidden disabled:opacity-70"
               >
-                <div className="svg-wrapper-1">
-                  <div className="svg-wrapper">
-                    <FaPaperPlane size={18} />
-                  </div>
+                <div className="group-hover:-translate-y-0.5 group-hover:translate-x-1 transition-transform duration-300">
+                  <FaPaperPlane className="text-base group-hover:rotate-[25deg] transition-transform duration-300" />
                 </div>
-                <span>{submitting ? "Sending..." : "Send Message"}</span>
+                <span className="ml-2.5 transition-all duration-300">
+                  {submitting ? "Sending..." : "Send Message"}
+                </span>
               </motion.button>
-            </StyledButtonWrapper>
+            </div>
 
             {/* Form Footer Note */}
             <div className="md:col-span-2 text-center text-xs text-muted-dim flex items-center justify-center gap-2 font-mono">
@@ -152,62 +166,4 @@ export default function Contact() {
   );
 }
 
-const StyledButtonWrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  margin-top: 1rem;
-  margin-bottom: 0.5rem;
-
-  button {
-    font-family: inherit;
-    font-size: 15px;
-    font-weight: 600;
-    background: linear-gradient(135deg, #10b981 0%, #22d3ee 100%);
-    color: #04120f;
-    padding: 0.9em 2em;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: none;
-    border-radius: 16px;
-    overflow: hidden;
-    transition: all 0.3s ease;
-    cursor: pointer;
-    box-shadow: 0 12px 32px -10px rgba(16, 185, 129, 0.4);
-    width: 100%;
-    max-width: 320px;
-  }
-
-  button span {
-    display: block;
-    margin-left: 0.6em;
-    transition: all 0.3s ease-in-out;
-  }
-
-  button svg {
-    display: block;
-    transform-origin: center center;
-    transition: transform 0.3s ease-in-out;
-  }
-
-  button:hover .svg-wrapper {
-    animation: fly-1 0.6s ease-in-out infinite alternate;
-  }
-
-  button:hover svg {
-    transform: translateX(0.5em) rotate(25deg) scale(1.1);
-  }
-
-  button:active {
-    transform: scale(0.98);
-  }
-
-  @keyframes fly-1 {
-    from {
-      transform: translateY(0.1em);
-    }
-    to {
-      transform: translateY(-0.1em);
-    }
-  }
-`;
+export default memo(Contact);

@@ -74,10 +74,15 @@ export default function About() {
           <div className="w-full lg:w-1/2 max-w-[540px]">
             <div className="relative rounded-[28px] border border-white/10 overflow-hidden bg-white/[0.02] p-3 shadow-2xl group">
               <div className="absolute inset-0 bg-gradient-to-tr from-teal-500/10 to-transparent pointer-events-none"></div>
+
               <img
                 src={codingImage}
                 alt="Zain Arif Engineering Workspace"
-                className="w-full h-auto rounded-[20px] object-cover group-hover:scale-[1.02] transition-transform duration-500"
+                loading="lazy"
+                decoding="async"
+                width="800"
+                height="500"
+                className="w-full h-auto rounded-[20px] object-cover group-hover:scale-[1.02] transition-transform duration-500 transform-gpu"
               />
             </div>
           </div>

@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, memo, useCallback } from "react";
 import { Link, useLocation } from "react-router-dom";
 import logo from "/images/logo.png";
 import Button from "./ui/Button";
-import { FaArrowRight, FaTimes } from "react-icons/fa";
+import { FaArrowRight } from "@react-icons/all-files/fa/FaArrowRight";
+import { FaTimes } from "@react-icons/all-files/fa/FaTimes";
 
 const NAV_ITEMS = [
   { label: "Home", targetId: "home", path: "/" },
@@ -18,7 +19,18 @@ const Header = () => {
   const location = useLocation();
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 20);
+    let ticking = false;
+
+    const handleScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          setScrolled(window.scrollY > 20);
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+
     handleScroll();
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
@@ -37,24 +49,25 @@ const Header = () => {
   }, [menuOpen]);
 
   // Clean URL & Smooth Scroll Handler
-  const handleNavClick = (e, targetId, path) => {
-    // 1. Agar user kisi doosray page par hai (e.g. /privacy-policy), toh home page par navigate hone de
-    if (location.pathname !== "/") {
+  const handleNavClick = useCallback(
+    (e, targetId, path) => {
+      if (location.pathname !== "/") {
+        setMenuOpen(false);
+        return;
+      }
+
+      e.preventDefault();
       setMenuOpen(false);
-      return;
-    }
 
-    // 2. Agar home page par hi hain, toh smooth scroll karein aur URL update karein bina '#' ke
-    e.preventDefault();
-    setMenuOpen(false);
+      window.history.pushState({}, "", path);
 
-    window.history.pushState({}, "", path);
-
-    const element = document.getElementById(targetId);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
-    }
-  };
+      const element = document.getElementById(targetId);
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth" });
+      }
+    },
+    [location.pathname]
+  );
 
   return (
     <>
@@ -66,8 +79,8 @@ const Header = () => {
         <div
           className={`mx-auto w-[92%] max-w-[1100px] flex items-center justify-between rounded-2xl transition-all duration-300 px-3.5 sm:px-6 ${
             scrolled
-              ? "bg-[#09090b]/80 border border-white/10 backdrop-blur-2xl shadow-[0_8px_32px_rgba(0,0,0,0.5)] py-2 sm:py-2.5"
-              : "bg-[#09090b]/40 border border-white/5 backdrop-blur-md py-2.5 sm:py-3"
+              ? "bg-[#09090b]/80 border border-white/10 backdrop-blur-md shadow-[0_8px_32px_rgba(0,0,0,0.5)] py-2 sm:py-2.5 transform-gpu"
+              : "bg-[#09090b]/40 border border-white/5 backdrop-blur-sm py-2.5 sm:py-3 transform-gpu"
           }`}
         >
           {/* Logo */}
@@ -77,14 +90,22 @@ const Header = () => {
             className="flex items-center gap-2.5 group shrink-0"
           >
             <div className="relative p-1.5 rounded-xl bg-white/5 border border-white/10 group-hover:border-teal-500/40 transition-colors shrink-0">
-              <img src={logo} alt="Studio Logo" className="w-6 h-6 sm:w-7 sm:h-7 object-contain" />
+              <img
+                src={logo}
+                alt="Studio Logo"
+                width="28"
+                height="28"
+                loading="eager"
+                decoding="async"
+                className="w-6 h-6 sm:w-7 sm:h-7 object-contain"
+              />
             </div>
             <div className="flex flex-col text-left">
               <span className="font-bold text-ink text-xs sm:text-sm tracking-tight group-hover:text-teal-400 transition-colors leading-tight">
                 Zain Arif
               </span>
               <span className="text-[8px] sm:text-[9px] font-mono text-muted tracking-wider uppercase">
-               MERN Stack Developer
+                MERN Stack Developer
               </span>
             </div>
           </Link>
@@ -122,7 +143,7 @@ const Header = () => {
             aria-label="Toggle Navigation Menu"
             aria-expanded={menuOpen}
             className="flex flex-col justify-center items-center gap-1.5 w-9 h-9 rounded-xl bg-white/5 border border-white/10 lg:hidden cursor-pointer shrink-0"
-            onClick={() => setMenuOpen(!menuOpen)}
+            onClick={() => setMenuOpen((prev) => !prev)}
           >
             <span className="block w-4 h-[1.5px] bg-white rounded-full" />
             <span className="block w-4 h-[1.5px] bg-white rounded-full" />
@@ -141,7 +162,15 @@ const Header = () => {
         <div className="flex items-center justify-between w-full">
           <div className="flex items-center gap-2.5">
             <div className="p-1.5 rounded-xl bg-white/5 border border-white/10">
-              <img src={logo} alt="Zain Arif Logo" className="w-6 h-6 object-contain" />
+              <img
+                src={logo}
+                alt="Zain Arif Logo"
+                width="24"
+                height="24"
+                loading="lazy"
+                decoding="async"
+                className="w-6 h-6 object-contain"
+              />
             </div>
             <div className="flex flex-col text-left">
               <span className="font-bold text-ink text-xs">Zain Arif</span>
@@ -152,7 +181,7 @@ const Header = () => {
           {/* Close Button */}
           <button
             aria-label="Close Navigation Menu"
-            className="w-9 h-9 flex items-center justify-center rounded-xl bg-white/5 border border-white/10 text-white text-sm"
+            className="w-9 h-9 flex items-center justify-center rounded-xl bg-white/5 border border-white/10 text-white text-sm cursor-pointer"
             onClick={() => setMenuOpen(false)}
           >
             <FaTimes />
@@ -190,4 +219,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default memo(Header);

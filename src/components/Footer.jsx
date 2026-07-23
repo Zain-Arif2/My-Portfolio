@@ -1,6 +1,10 @@
-import React from "react";
+import React, { memo } from "react";
 import { Link } from "react-router-dom";
-import { FaInstagram, FaDiscord, FaGithub, FaLinkedin, FaArrowUp } from "react-icons/fa";
+import { FaGithub } from "@react-icons/all-files/fa/FaGithub";
+import { FaLinkedin } from "@react-icons/all-files/fa/FaLinkedin";
+import { FaInstagram } from "@react-icons/all-files/fa/FaInstagram";
+import { FaDiscord } from "@react-icons/all-files/fa/FaDiscord";
+import { FaArrowUp } from "@react-icons/all-files/fa/FaArrowUp";
 import logo from "/images/logo.png";
 
 const socialIcons = [
@@ -23,7 +27,15 @@ const Footer = () => {
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pb-6 border-b border-white/5">
           {/* Identity */}
           <Link to="/" className="flex items-center gap-3">
-            <img src={logo} alt="Zain Arif Logo" className="w-8 h-8 object-contain" />
+            <img 
+              src={logo} 
+              alt="Zain Arif Logo" 
+              width="32"
+              height="32"
+              loading="lazy"
+              decoding="async"
+              className="w-8 h-8 object-contain" 
+            />
             <div className="text-left">
               <span className="font-display font-semibold text-ink text-base block leading-none">
                 Zain Arif
@@ -49,7 +61,7 @@ const Footer = () => {
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4 text-xs">
           <p>© {new Date().getFullYear()} Zain Arif. All rights reserved.</p>
 
-          {/* Legal Links (Updated with React Router Link) */}
+          {/* Legal Links */}
           <div className="flex items-center gap-4 font-mono text-[11px]">
             <Link to="/privacy-policy" className="hover:text-teal-400 transition-colors">
               Privacy Policy
@@ -62,13 +74,13 @@ const Footer = () => {
 
           {/* Social Links */}
           <div className="flex items-center gap-2">
-            {socialIcons.map(({ icon, link, label }, index) => (
+            {socialIcons.map(({ icon, link, label }) => (
               <a
-                key={index}
+                key={label}
                 href={link}
                 aria-label={label}
                 target={link.startsWith("http") ? "_blank" : undefined}
-                rel={link.startsWith("http") ? "noreferrer" : undefined}
+                rel={link.startsWith("http") ? "noopener noreferrer" : undefined}
                 className="w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-muted hover:text-teal-400 hover:border-teal-400/40 hover:bg-white/10 transition-all duration-200 text-sm"
               >
                 {icon}
@@ -82,4 +94,4 @@ const Footer = () => {
   );
 };
 
-export default Footer;
+export default memo(Footer);
