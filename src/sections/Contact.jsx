@@ -52,24 +52,7 @@ export default function Contact() {
           Have a web application, SaaS idea, or project in mind? Send me a message and I will get back to you shortly.
         </p>
 
-        {/* Status Bar */}
-        <div className="flex flex-wrap items-center justify-center gap-4 mt-8">
-          <div className="inline-flex items-center gap-2 rounded-full border border-teal-500/20 bg-teal-500/10 px-4 py-2 text-xs text-teal-300">
-            <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-teal-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-teal-400"></span>
-            </span>
-            <span className="font-mono">Available for New Projects</span>
-          </div>
-
-          <div className="inline-flex items-center gap-2 text-xs text-muted font-mono bg-white/5 border border-white/10 px-4 py-2 rounded-full">
-            <FaClock className="text-teal-400 text-xs" /> Fast Response Time
-          </div>
-
-          <div className="inline-flex items-center gap-2 text-xs text-muted font-mono bg-white/5 border border-white/10 px-4 py-2 rounded-full">
-            <FaGlobe className="text-teal-400 text-xs" /> Remote Collaboration
-          </div>
-        </div>
+        
 
         {/* Form Container */}
         <div className="max-w-3xl mx-auto mt-14 rounded-[32px] border border-white/10 bg-white/[0.025] p-6 sm:p-10 backdrop-blur-2xl shadow-2xl text-left">

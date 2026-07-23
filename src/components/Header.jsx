@@ -1,19 +1,21 @@
 import React, { useState, useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
 import logo from "/images/logo.png";
 import Button from "./ui/Button";
 import { FaArrowRight, FaTimes } from "react-icons/fa";
 
 const NAV_ITEMS = [
-  { label: "Home", href: "#home" },
-  { label: "About", href: "#about" },
-  { label: "Services", href: "#services" },
-  { label: "Projects", href: "#projects" },
-  { label: "Contact", href: "#contact" },
+  { label: "Home", targetId: "home", path: "/" },
+  { label: "About", targetId: "about", path: "/about" },
+  { label: "Services", targetId: "services", path: "/services" },
+  { label: "Projects", targetId: "projects", path: "/projects" },
+  { label: "Contact", targetId: "contact", path: "/contact" },
 ];
 
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
@@ -34,6 +36,26 @@ const Header = () => {
     };
   }, [menuOpen]);
 
+  // Clean URL & Smooth Scroll Handler
+  const handleNavClick = (e, targetId, path) => {
+    // 1. Agar user kisi doosray page par hai (e.g. /privacy-policy), toh home page par navigate hone de
+    if (location.pathname !== "/") {
+      setMenuOpen(false);
+      return;
+    }
+
+    // 2. Agar home page par hi hain, toh smooth scroll karein aur URL update karein bina '#' ke
+    e.preventDefault();
+    setMenuOpen(false);
+
+    window.history.pushState({}, "", path);
+
+    const element = document.getElementById(targetId);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   return (
     <>
       <header
@@ -49,7 +71,11 @@ const Header = () => {
           }`}
         >
           {/* Logo */}
-          <a href="#home" className="flex items-center gap-2.5 group shrink-0">
+          <Link
+            to="/"
+            onClick={(e) => handleNavClick(e, "home", "/")}
+            className="flex items-center gap-2.5 group shrink-0"
+          >
             <div className="relative p-1.5 rounded-xl bg-white/5 border border-white/10 group-hover:border-teal-500/40 transition-colors shrink-0">
               <img src={logo} alt="Studio Logo" className="w-6 h-6 sm:w-7 sm:h-7 object-contain" />
             </div>
@@ -58,29 +84,36 @@ const Header = () => {
                 Zain Arif
               </span>
               <span className="text-[8px] sm:text-[9px] font-mono text-muted tracking-wider uppercase">
-                Software Studio
+               MERN Stack Developer
               </span>
             </div>
-          </a>
+          </Link>
 
           {/* Desktop Nav Items */}
           <nav className="hidden lg:flex items-center gap-6 xl:gap-8">
             {NAV_ITEMS.map((item) => (
-              <a
+              <Link
                 key={item.label}
-                href={item.href}
+                to={item.path}
+                onClick={(e) => handleNavClick(e, item.targetId, item.path)}
                 className="relative text-xs xl:text-sm font-medium text-muted hover:text-ink transition-colors duration-200 group py-1"
               >
                 {item.label}
                 <span className="absolute left-0 bottom-0 h-[2px] w-0 bg-gradient-to-r from-emerald-500 to-cyan-400 rounded-full transition-all duration-300 group-hover:w-full" />
-              </a>
+              </Link>
             ))}
           </nav>
 
           {/* Desktop Button */}
           <div className="hidden lg:flex items-center gap-4">
-            <Button href="#contact" variant="primary" size="sm" icon={<FaArrowRight className="text-xs" />}>
-              Start a Project
+            <Button
+              href="/contact"
+              variant="primary"
+              size="sm"
+              icon={<FaArrowRight className="text-xs" />}
+              onClick={(e) => handleNavClick(e, "contact", "/contact")}
+            >
+              Hire Me
             </Button>
           </div>
 
@@ -129,27 +162,27 @@ const Header = () => {
         {/* Links Center */}
         <nav className="flex flex-col gap-3 w-full my-auto">
           {NAV_ITEMS.map((item) => (
-            <a
+            <Link
               key={item.label}
-              href={item.href}
-              onClick={() => setMenuOpen(false)}
+              to={item.path}
+              onClick={(e) => handleNavClick(e, item.targetId, item.path)}
               className="text-center text-sm font-medium text-slate-300 hover:text-teal-400 transition-colors py-2.5 rounded-xl bg-white/[0.02] border border-white/5"
             >
               {item.label}
-            </a>
+            </Link>
           ))}
         </nav>
 
         {/* Bottom CTA Button */}
         <div className="w-full">
           <Button
-            href="#contact"
+            href="/contact"
             variant="primary"
             size="lg"
             className="w-full justify-center"
-            onClick={() => setMenuOpen(false)}
+            onClick={(e) => handleNavClick(e, "contact", "/contact")}
           >
-            Start Project <FaArrowRight className="ml-1 text-xs" />
+            Hire Me <FaArrowRight className="ml-1 text-xs" />
           </Button>
         </div>
       </div>

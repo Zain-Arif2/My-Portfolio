@@ -37,9 +37,13 @@
   --shadow-glow: 0 0 0 1px rgba(45, 212, 191, 0.2), 0 0 35px -5px rgba(45, 212, 191, 0.35);
 }
 
+/* Horizontal Overflow Fixes applied to html, body, and root */
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 90px;
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: hidden;
 }
 
 body {
@@ -47,6 +51,14 @@ body {
   color: var(--color-ink);
   font-family: var(--font-body);
   -webkit-font-smoothing: antialiased;
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+#root {
+  width: 100%;
+  max-width: 100vw;
   overflow-x: hidden;
 }
 
