@@ -1,68 +1,158 @@
 import React from 'react';
-import { FaMapMarkerAlt, FaBriefcase, FaGlobe, FaGithub, FaLinkedin, FaTwitter, FaEnvelope } from 'react-icons/fa';
+import { FaMapMarkerAlt, FaBriefcase, FaGlobe, FaEnvelope, FaArrowRight, FaCheckCircle, FaStar, FaLinkedin, FaGithub } from 'react-icons/fa';
 import ProfileImg from "/images/profile.png";
-import Switch from './switch'; // adjust path if different
+import Switch from './switch';
+import Button from './ui/Button';
 
 function Hero() {
   return (
-    <section className="bg-[#292F36] py-[150px] pt-[204px] px-4 sm:px-10 lg:px-32 flex flex-wrap justify-center items-center relative text-left">
+    <section id="home" className="relative overflow-hidden bg-[#09090b] pt-32 sm:pt-40 pb-20 sm:pb-28 px-4 sm:px-8 lg:px-14">
 
-      {/* Profile Card */}
-      <div className="bg-[#1A1E23] border-l-4 border-[#12F7D6] rounded-[20px] p-8 w-[353px] text-center shadow-[0_4px_10px_rgba(0,0,0,0.5)] mb-10 lg:mb-0 lg:mr-10">
-        <img src={ProfileImg} alt="Zain-Arif" className="w-[90px] h-[90px] rounded-full mx-auto mb-4" />
-        <p className="text-[#bbb] text-base pt-2">Front-End Developer</p>
-
-        <ul className="text-[#aaa] text-[15px] mt-4 space-y-2">
-          <li className="flex items-center justify-center gap-2"><FaEnvelope className="text-[#12F7D6]" /> arifzain249@gmail.com</li>
-          <li className="flex items-center justify-center gap-2"><FaMapMarkerAlt className="text-[#12F7D6]" /> Pakistan</li>
-          <li className="flex items-center justify-center gap-2"><FaBriefcase className="text-[#12F7D6]" /> Full-Time / Freelance</li>
-          <li className="flex items-center justify-center gap-2">
-            <FaGlobe className="text-[#12F7D6]" />
-            <a href="https://www.linkedin.com/in/zain-arif-8a5302224" target="_blank" rel="noopener noreferrer" className="hover:underline">
-              LinkedIn
-            </a>
-          </li>
-        </ul>
-
-        <div className="flex flex-wrap justify-center mt-4">
-          {["HTML", "CSS", "JS", "REACT"].map(skill => (
-            <span key={skill} className="bg-[#292F36] border border-[#12F7D6] text-[#12F7D6] text-sm px-3 py-1 m-1 rounded">{skill}</span>
-          ))}
-        </div>
-
-        {/* Integrated Switch Download Button */}
-        <div className="mt-4 flex justify-center">
-          <Switch downloadLink="/cv/Zain_Arif_CV.pdf" />
-        </div>
+      {/* Subtle Glow - US/UK Agency Style */}
+      <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
+        <div className="absolute -top-40 left-1/2 -translate-x-1/2 w-[800px] sm:w-[1100px] h-[500px] rounded-full bg-gradient-to-r from-teal-500/10 via-cyan-500/10 to-emerald-500/10 blur-[130px]" />
       </div>
 
-      {/* Hero Text */}
-      <div className="max-w-[800px] text-white">
-        <p className="font-mono text-[#12F7D6] text-base">&lt;h1&gt;</p>
-        <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-[4rem] font-bold leading-snug ml-4">
-          Hey, I’m <span className="text-[#12F7D6]">Zain Arif</span>,<br />
-          Front-End Developer
-        </h1>
-        <p className="font-mono text-[#12F7D6] text-base">&lt;/h1&gt;</p>
+      <div className="mx-auto max-w-[1280px] flex flex-col lg:flex-row items-center lg:items-start justify-between gap-12 lg:gap-16">
 
-        <p className="font-mono text-[#12F7D6] text-base mt-4">&lt;p&gt;</p>
-        <p className="text-[#ccc] text-lg ml-5 mt-3 mb-6">
-          I help businesses grow by crafting amazing web experiences. <br />
-          If you’re looking for a developer who gets things done — let’s connect.
-        </p>
-        <p className="font-mono text-[#12F7D6] text-base">&lt;/p&gt;</p>
+        {/* Hero Copy Column */}
+        <div className="w-full lg:max-w-[700px] text-left order-2 lg:order-1">
 
-        <a href="mailto:arifzain249@gmail.com" className="ml-5 text-[#12F7D6] font-bold text-[1.9rem] inline-flex items-center gap-2 hover:text-[#0fdcc4] transition">
-          Let’s Talk <FaEnvelope className="text-[#292F36] bg-[#12F7D6] p-3 rounded-full text-5xl hover:bg-[#0ec2b1] transition-transform transform hover:scale-110" />
-        </a>
-      </div>
+          {/* High-End Agency Badge */}
+          <div className="inline-flex items-center gap-2.5 rounded-full border border-teal-500/20 bg-teal-500/10 px-4 py-2 mb-7 backdrop-blur-md">
+            <span className="relative flex h-2.5 w-2.5">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-teal-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-teal-400"></span>
+            </span>
+           <span className="text-xs font-mono font-medium text-teal-300 tracking-wider uppercase">
+  Full-Stack Software Engineer • Available for Freelance & Contract Work
+</span>
+          </div>
 
-      {/* Social Icons */}
-      <div className="hidden lg:flex flex-col gap-5 fixed left-5 top-1/2 transform -translate-y-1/2 z-10">
-        <a href="https://github.com/Zain-Arif2" target="_blank" rel="noreferrer" className="text-white text-[24px] bg-[#20252b] p-3 rounded-full shadow-md hover:scale-110 hover:text-[#12F7D6] hover:bg-[#191c20] transition"><FaGithub /></a>
-        <a href="https://www.linkedin.com/in/zain-arif-8a5302224/" target="_blank" rel="noreferrer" className="text-white text-[24px] bg-[#20252b] p-3 rounded-full shadow-md hover:scale-110 hover:text-[#12F7D6] hover:bg-[#191c20] transition"><FaLinkedin /></a>
-        <a href="https://twitter.com" target="_blank" rel="noreferrer" className="text-white text-[24px] bg-[#20252b] p-3 rounded-full shadow-md hover:scale-110 hover:text-[#12F7D6] hover:bg-[#191c20] transition"><FaTwitter /></a>
-        <a href="mailto:arifzain249@gmail.com" className="text-white text-[24px] bg-[#20252b] p-3 rounded-full shadow-md hover:scale-110 hover:text-[#12F7D6] hover:bg-[#191c20] transition"><FaEnvelope /></a>
+          {/* Client-Centric Headline */}
+         <h1 className="font-display font-bold leading-[1.12] text-3xl sm:text-5xl lg:text-[3.35rem] text-ink tracking-tight">
+  Building modern <span className="text-gradient-accent">SaaS products</span> and scalable web applications with React, Next.js &amp; Node.js.
+</h1>
+
+          {/* Clear Value Proposition */}
+         <p className="text-muted text-base sm:text-lg leading-relaxed mt-5 max-w-[620px]">
+  I help startups, agencies, and businesses build fast, scalable, and maintainable web applications with React, Next.js, Node.js, and MongoDB. My focus is clean architecture, performance, and long-term maintainability.
+</p>
+
+          {/* Enterprise Value Pillars */}
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 mt-8 pt-6 border-t border-white/10 max-w-[640px]">
+            <div className="flex items-center gap-2 text-xs sm:text-sm text-ink font-medium">
+              <FaCheckCircle className="text-teal-400 shrink-0 text-sm" /> Performance Focused
+            </div>
+            <div className="flex items-center gap-2 text-xs sm:text-sm text-ink font-medium">
+              <FaCheckCircle className="text-teal-400 shrink-0 text-sm" /> Clean Architecture
+            </div>
+            <div className="flex items-center gap-2 text-xs sm:text-sm text-ink font-medium">
+              <FaCheckCircle className="text-teal-400 shrink-0 text-sm" /> Scalable Solutions
+            </div>
+          </div>
+
+          {/* Action CTAs */}
+          <div className="flex flex-wrap items-center gap-4 mt-9">
+            <Button href="#contact" variant="primary" size="lg" icon={<FaArrowRight />}>
+              Let's Work Together
+            </Button>
+            <Button href="#projects" variant="secondary" size="lg">
+              View Recent Projects
+            </Button>
+          </div>
+
+   
+
+        </div>
+
+        {/* Studio Profile Card */}
+        <div className="order-1 lg:order-2 w-full max-w-[360px] shrink-0">
+          <div className="relative rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-xl p-7 text-center group hover:border-teal-500/30 transition-all duration-300 shadow-2xl">
+            
+            <div className="relative inline-block mb-4">
+              <img
+                src={ProfileImg}
+                alt="Zain Arif - MERN Stack & Next.js Developer"
+                className="w-24 h-24 rounded-2xl object-cover mx-auto ring-2 ring-teal-400/40 shadow-xl group-hover:scale-105 transition-transform duration-300"
+              />
+              <span className="absolute -bottom-1 -right-1 w-5 h-5 rounded-full bg-teal-400 border-2 border-[#09090b] flex items-center justify-center text-[10px] text-[#09090b] font-bold">
+                ✓
+              </span>
+            </div>
+
+            <h3 className="font-display font-bold text-ink text-xl">Zain Arif</h3>
+            <p className="text-teal-400 text-xs font-mono mt-1 font-semibold uppercase tracking-wider">
+            MERN Stack & Next.js Developer
+            </p>
+
+            {/* High-End Professional Details */}
+            <div className="my-5 py-4 border-y border-white/10 text-left space-y-3 text-xs text-muted">
+              <div className="flex items-center gap-2.5">
+                <FaEnvelope className="text-teal-400 shrink-0 text-sm" />
+                <a href="mailto:arifzain249@gmail.com" className="text-ink hover:text-teal-400 transition-colors truncate">
+                  arifzain249@gmail.com
+                </a>
+              </div>
+              <div className="flex items-center gap-2.5">
+                <FaGlobe className="text-teal-400 shrink-0 text-sm" />
+                <span>Available Worldwide</span>
+              </div>
+              <div className="flex items-center gap-2.5">
+                <FaBriefcase className="text-teal-400 shrink-0 text-sm" />
+                <span>Available for Freelance & Contract Work</span>
+              </div>
+              <div className="flex items-center gap-2.5">
+                <FaLinkedin className="text-teal-400 shrink-0 text-sm" />
+                <a
+                  href="https://www.linkedin.com/in/zain-arif-8a5302224"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-ink hover:text-teal-400 underline decoration-teal-500/30 transition-colors"
+                >
+                  LinkedIn Profile
+                </a>
+              </div>
+              <div className="flex items-center gap-2.5">
+  <FaGithub className="text-teal-400 shrink-0 text-sm" />
+  <a
+    href="https://github.com/Zain-Arif2"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="text-ink hover:text-teal-400 underline decoration-teal-500/30 transition-colors"
+  >
+    GitHub Profile
+  </a>
+</div>
+            </div>
+
+            {/* Core Tech Stack */}
+            <div className="flex flex-wrap justify-center gap-1.5 mb-6">
+              {[
+  "React",
+  "Next.js",
+  "Node.js",
+  "Express",
+  "MongoDB",
+  "Tailwind CSS"
+].map((skill) => (
+                <span
+                  key={skill}
+                  className="bg-white/5 border border-white/10 text-slate-300 text-[10px] px-2.5 py-1 rounded-md font-mono"
+                >
+                  {skill}
+                </span>
+              ))}
+            </div>
+
+            {/* CV Action */}
+            <div className="flex justify-center pt-1 border-t border-white/5">
+              <Switch downloadLink="/cv/Zain_Arif_CV.pdf" />
+            </div>
+
+          </div>
+        </div>
+
       </div>
 
     </section>

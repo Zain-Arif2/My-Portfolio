@@ -1,9 +1,146 @@
 /* Import Tailwind first */
 @import "tailwindcss";
 
-/* Import custom font AFTER Tailwind (if you're using @fontsource) */
+/* Kept for the CV-download switch component's existing "Ubuntu Mono" reference */
 @import "@fontsource-variable/ubuntu-sans-mono";
 
+@theme {
+  /* Color */
+  --color-bg: #09090b;
+  --color-bg-secondary: #111827;
+  --color-surface: rgba(255, 255, 255, 0.035);
+  --color-surface-hover: rgba(255, 255, 255, 0.065);
+  --color-hair: rgba(255, 255, 255, 0.08);
+  --color-hair-strong: rgba(255, 255, 255, 0.16);
+  --color-ink: #f4f4f6;
+  --color-muted: #9aa1ac;
+  --color-muted-dim: #6b7280;
+  --color-accent-from: #10b981;
+  --color-accent-to: #22d3ee;
+  --color-accent: #2dd4bf;
+
+  /* Typography */
+  --font-display: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --font-body: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+
+  /* Radius */
+  --radius-input: 16px;
+  --radius-button: 16px;
+  --radius-card: 24px;
+  --radius-image: 24px;
+  --radius-project: 28px;
+
+  /* Shadow */
+  --shadow-soft: 0 1px 2px rgba(0, 0, 0, 0.3), 0 12px 32px -12px rgba(0, 0, 0, 0.55);
+  --shadow-elevated: 0 2px 4px rgba(0, 0, 0, 0.35), 0 24px 48px -16px rgba(0, 0, 0, 0.65);
+  --shadow-glow: 0 0 0 1px rgba(45, 212, 191, 0.2), 0 0 35px -5px rgba(45, 212, 191, 0.35);
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 90px;
+}
+
 body {
-  font-family: 'Ubuntu Mono', monospace;
+  background-color: var(--color-bg);
+  color: var(--color-ink);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  letter-spacing: -0.02em;
+}
+
+code, .font-mono {
+  font-family: var(--font-mono);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #09090b;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(45, 212, 191, 0.4);
+}
+
+/* Focus States */
+a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+::selection {
+  background: rgba(45, 212, 191, 0.3);
+  color: #ffffff;
+}
+
+/* Gradient Text Utilities */
+.text-gradient-accent {
+  background-image: linear-gradient(135deg, #10b981 0%, #22d3ee 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.text-gradient-silver {
+  background-image: linear-gradient(180deg, #ffffff 0%, #a1a1aa 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.bg-gradient-accent {
+  background-image: linear-gradient(135deg, #10b981 0%, #22d3ee 100%);
+}
+
+/* Glassmorphism Card Utility */
+.glass-card {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.glass-card:hover {
+  background: rgba(255, 255, 255, 0.055);
+  border-color: rgba(255, 255, 255, 0.16);
+}
+
+/* Glow Border Effect */
+.glow-border {
+  position: relative;
+}
+
+.glow-border::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.4), rgba(34, 211, 238, 0.4), transparent 60%);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

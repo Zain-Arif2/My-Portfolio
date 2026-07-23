@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { motion } from "framer-motion";
 import Footer from "../components/Footer";
 import axios from "axios";
-import { FaPaperPlane, FaUser, FaEnvelope, FaCommentDots } from "react-icons/fa";
+import { FaPaperPlane, FaUser, FaEnvelope, FaCommentDots, FaClock, FaCheckCircle, FaGlobe } from "react-icons/fa";
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -12,12 +12,15 @@ export default function Contact() {
     message: "",
   });
 
+  const [submitting, setSubmitting] = useState(false);
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setSubmitting(true);
     try {
       await axios.post("http://localhost:5000/send-email", formData);
       alert("Message sent successfully!");
@@ -25,98 +28,141 @@ export default function Contact() {
     } catch (error) {
       console.error("Error sending email:", error);
       alert("Failed to send message.");
+    } finally {
+      setSubmitting(false);
     }
   };
 
   return (
-    <section
-    id="contact"
-    className="
-      bg-[#1A1E23] text-white text-center
-      pt-[60px]            /* mobile default */
-      sm:pt-[150px]        /* sm and up */
-      px-4 sm:px-8 md:px-16 lg:px-[192px]
-    "
-  >
-  
-  
-  
-      <h2 className="text-3xl md:text-5xl font-bold text-[#12F7D6]">Contact</h2>
+    <section id="contact" className="relative bg-[#09090b] pt-24 sm:pt-32 pb-12 px-4 sm:px-8 md:px-16 lg:px-24 border-t border-white/5 overflow-hidden">
+      
+      {/* Ambient Radial Lighting */}
+      <div className="pointer-events-none absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[400px] bg-gradient-to-r from-emerald-500/10 to-cyan-500/10 rounded-full blur-[140px]" />
 
-      <p className="text-md mt-4 text-gray-300">
-        I’m currently available for freelance work
-      </p>
+      <div className="mx-auto max-w-[1140px] text-center relative z-10">
+        
+        {/* Availability & Header */}
+        <p className="text-teal-400 font-mono text-xs tracking-widest uppercase mb-3">
+          Get In Touch
+        </p>
+        <h2 className="font-display font-bold text-3xl sm:text-5xl lg:text-6xl text-ink tracking-tight">
+          Let's talk about your <span className="text-gradient-accent">project</span>.
+        </h2>
+        <p className="text-muted text-base sm:text-lg mt-4 max-w-[620px] mx-auto leading-relaxed">
+          Have a web application, SaaS idea, or project in mind? Send me a message and I will get back to you shortly.
+        </p>
 
-      <form
-        onSubmit={handleSubmit}
-        className="max-w-4xl mx-auto mt-10 grid grid-cols-1 md:grid-cols-2 gap-6 text-left"
-      >
-        <div className="flex flex-col">
-          <label className="text-[#12F7D6] mb-1 text-sm md:text-base">Your name *</label>
-          <div className="flex items-center border-b border-[#12F7D6]">
-            <FaUser className="text-[#12F7D6] mr-2" />
-            <input
-              type="text"
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
-              placeholder="Enter your name"
-              required
-              className="bg-transparent p-2 w-full focus:outline-none text-white placeholder:text-gray-400 text-sm md:text-base"
-            />
+        {/* Status Bar */}
+        <div className="flex flex-wrap items-center justify-center gap-4 mt-8">
+          <div className="inline-flex items-center gap-2 rounded-full border border-teal-500/20 bg-teal-500/10 px-4 py-2 text-xs text-teal-300">
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-teal-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-teal-400"></span>
+            </span>
+            <span className="font-mono">Available for New Projects</span>
+          </div>
+
+          <div className="inline-flex items-center gap-2 text-xs text-muted font-mono bg-white/5 border border-white/10 px-4 py-2 rounded-full">
+            <FaClock className="text-teal-400 text-xs" /> Fast Response Time
+          </div>
+
+          <div className="inline-flex items-center gap-2 text-xs text-muted font-mono bg-white/5 border border-white/10 px-4 py-2 rounded-full">
+            <FaGlobe className="text-teal-400 text-xs" /> Remote Collaboration
           </div>
         </div>
 
-        <div className="flex flex-col">
-          <label className="text-[#12F7D6] mb-1 text-sm md:text-base">Your email *</label>
-          <div className="flex items-center border-b border-[#12F7D6]">
-            <FaEnvelope className="text-[#12F7D6] mr-2" />
-            <input
-              type="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              placeholder="Enter your email"
-              required
-              className="bg-transparent p-2 w-full focus:outline-none text-white placeholder:text-gray-400 text-sm md:text-base"
-            />
-          </div>
-        </div>
-
-        <div className="flex flex-col md:col-span-2">
-          <label className="text-[#12F7D6] mb-1 text-sm md:text-base">Your message *</label>
-          <div className="flex items-start border-b border-[#12F7D6]">
-            <FaCommentDots className="text-[#12F7D6] mr-2 mt-2" />
-            <textarea
-              name="message"
-              value={formData.message}
-              onChange={handleChange}
-              placeholder="Enter your needs"
-              required
-              className="bg-transparent p-2 w-full focus:outline-none text-white placeholder:text-gray-400 text-sm md:text-base"
-              rows={4}
-            ></textarea>
-          </div>
-        </div>
-
-        <StyledButtonWrapper className="md:col-span-2 text-center">
-          <motion.button
-            type="submit"
-            aria-label="Send Message"
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            <div className="svg-wrapper-1">
-              <div className="svg-wrapper">
-                <FaPaperPlane size={24} />
+        {/* Form Container */}
+        <div className="max-w-3xl mx-auto mt-14 rounded-[32px] border border-white/10 bg-white/[0.025] p-6 sm:p-10 backdrop-blur-2xl shadow-2xl text-left">
+          
+          <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            
+            {/* Name Input */}
+            <div className="flex flex-col">
+              <label className="text-ink font-display font-medium mb-2 text-xs uppercase tracking-wider">
+                Full Name <span className="text-teal-400">*</span>
+              </label>
+              <div className="flex items-center gap-3 rounded-[16px] border border-white/10 bg-white/5 px-4 py-1.5 focus-within:border-teal-400 focus-within:bg-white/10 transition-all duration-300">
+                <FaUser className="text-teal-400 shrink-0 text-sm" />
+                <input
+                  type="text"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleChange}
+                  placeholder="e.g. John Doe"
+                  required
+                  className="bg-transparent py-2.5 w-full focus:outline-none text-ink placeholder:text-muted-dim text-sm"
+                />
               </div>
             </div>
-            <span>Send Message</span>
-          </motion.button>
-        </StyledButtonWrapper>
-      </form>
 
-      <div>
+            {/* Email Input */}
+            <div className="flex flex-col">
+              <label className="text-ink font-display font-medium mb-2 text-xs uppercase tracking-wider">
+                Email Address <span className="text-teal-400">*</span>
+              </label>
+              <div className="flex items-center gap-3 rounded-[16px] border border-white/10 bg-white/5 px-4 py-1.5 focus-within:border-teal-400 focus-within:bg-white/10 transition-all duration-300">
+                <FaEnvelope className="text-teal-400 shrink-0 text-sm" />
+                <input
+                  type="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  placeholder="john@example.com"
+                  required
+                  className="bg-transparent py-2.5 w-full focus:outline-none text-ink placeholder:text-muted-dim text-sm"
+                />
+              </div>
+            </div>
+
+            {/* Message Input */}
+            <div className="flex flex-col md:col-span-2">
+              <label className="text-ink font-display font-medium mb-2 text-xs uppercase tracking-wider">
+                Project Details <span className="text-teal-400">*</span>
+              </label>
+              <div className="flex items-start gap-3 rounded-[16px] border border-white/10 bg-white/5 px-4 py-2 focus-within:border-teal-400 focus-within:bg-white/10 transition-all duration-300">
+                <FaCommentDots className="text-teal-400 shrink-0 mt-3 text-sm" />
+                <textarea
+                  name="message"
+                  value={formData.message}
+                  onChange={handleChange}
+                  placeholder="Tell me a bit about your project, goals, and required features..."
+                  required
+                  className="bg-transparent py-2 w-full focus:outline-none text-ink placeholder:text-muted-dim text-sm leading-relaxed"
+                  rows={5}
+                ></textarea>
+              </div>
+            </div>
+
+            {/* Submit Action */}
+            <StyledButtonWrapper className="md:col-span-2 text-center">
+              <motion.button
+                type="submit"
+                disabled={submitting}
+                aria-label="Send Message"
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                <div className="svg-wrapper-1">
+                  <div className="svg-wrapper">
+                    <FaPaperPlane size={18} />
+                  </div>
+                </div>
+                <span>{submitting ? "Sending..." : "Send Message"}</span>
+              </motion.button>
+            </StyledButtonWrapper>
+
+            {/* Form Footer Note */}
+            <div className="md:col-span-2 text-center text-xs text-muted-dim flex items-center justify-center gap-2 font-mono">
+              <FaCheckCircle className="text-teal-400" />
+              <span>Clear communication &amp; direct developer support</span>
+            </div>
+
+          </form>
+
+        </div>
+      </div>
+
+      <div className="mt-20">
         <Footer />
       </div>
     </section>
@@ -126,28 +172,32 @@ export default function Contact() {
 const StyledButtonWrapper = styled.div`
   display: flex;
   justify-content: center;
-  margin-top: 1.5rem;;
-  margin-bottom: 1.5rem;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
 
   button {
     font-family: inherit;
-    font-size: 18px;
-    background: #12F7D6;
-    color: black;
-    padding: 0.7em 1em;
-    padding-left: 0.9em;
+    font-size: 15px;
+    font-weight: 600;
+    background: linear-gradient(135deg, #10b981 0%, #22d3ee 100%);
+    color: #04120f;
+    padding: 0.9em 2em;
     display: flex;
     align-items: center;
+    justify-content: center;
     border: none;
-    border-radius: 9999px; /* fully rounded */
+    border-radius: 16px;
     overflow: hidden;
-    transition: all 0.2s;
+    transition: all 0.3s ease;
     cursor: pointer;
+    box-shadow: 0 12px 32px -10px rgba(16, 185, 129, 0.4);
+    width: 100%;
+    max-width: 320px;
   }
 
   button span {
     display: block;
-    margin-left: 0.5em;
+    margin-left: 0.6em;
     transition: all 0.3s ease-in-out;
   }
 
@@ -162,15 +212,11 @@ const StyledButtonWrapper = styled.div`
   }
 
   button:hover svg {
-    transform: translateX(1.2em) rotate(45deg) scale(1.1);
-  }
-
-  button:hover span {
-    transform: translateX(5em);
+    transform: translateX(0.5em) rotate(25deg) scale(1.1);
   }
 
   button:active {
-    transform: scale(0.95);
+    transform: scale(0.98);
   }
 
   @keyframes fly-1 {

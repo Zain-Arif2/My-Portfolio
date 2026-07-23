@@ -1,83 +1,158 @@
 import React, { useState, useEffect } from "react";
 import logo from "/images/logo.png";
+import Button from "./ui/Button";
+import { FaArrowRight, FaTimes } from "react-icons/fa";
+
+const NAV_ITEMS = [
+  { label: "Home", href: "#home" },
+  { label: "About", href: "#about" },
+  { label: "Services", href: "#services" },
+  { label: "Projects", href: "#projects" },
+  { label: "Contact", href: "#contact" },
+];
 
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [showHeader, setShowHeader] = useState(true);
+  const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => {
-      // Hide header when scrolled down > 0
-      if (window.scrollY > 0) {
-        setShowHeader(false);
-      } else {
-        setShowHeader(true);
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll);
+    const handleScroll = () => setScrolled(window.scrollY > 20);
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  if (!showHeader) return null; // unmount header when scrolled
+  // Prevent background scroll when mobile menu is open
+  useEffect(() => {
+    if (menuOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, [menuOpen]);
 
   return (
     <>
       <header
-        className={`fixed top-0 left-1/2 transform -translate-x-1/2 z-[1002] w-[95%] max-w-[1135px] flex items-center justify-between py-6 px-4 backdrop-blur-lg bg-[rgba(41,47,54,0.6)] transition-colors duration-300`}
+        className={`fixed top-0 left-0 right-0 w-full z-[1000] transition-all duration-300 ${
+          scrolled ? "py-2 sm:py-3" : "py-3 sm:py-4"
+        }`}
       >
-        <a href="#home">
-          <img src={logo} alt="Logo" className="w-12 h-12 object-contain" />
-        </a>
-
         <div
-          className="flex-col gap-[5px] cursor-pointer z-[1004] hidden max-[1024px]:flex"
-          onClick={() => setMenuOpen(!menuOpen)}
-        >
-          <span
-            className={`block w-[26px] h-[3px] bg-white rounded transition-all duration-300 ${
-              menuOpen ? "rotate-45 translate-y-[8px]" : ""
-            }`}
-          />
-          <span
-            className={`block w-[26px] h-[3px] bg-white rounded transition-all duration-300 ${
-              menuOpen ? "opacity-0" : ""
-            }`}
-          />
-          <span
-            className={`block w-[26px] h-[3px] bg-white rounded transition-all duration-300 ${
-              menuOpen ? "-rotate-45 -translate-y-[8px]" : ""
-            }`}
-          />
-        </div>
-
-        <nav
-          className={`flex gap-10 max-[1024px]:fixed max-[1024px]:top-0 max-[1024px]:right-0 max-[1024px]:h-screen max-[1024px]:w-full max-[1024px]:bg-[rgba(41,47,54,0.95)] max-[1024px]:backdrop-blur-lg max-[1024px]:flex-col max-[1024px]:justify-center max-[1024px]:items-center max-[1024px]:gap-8 transform transition-transform duration-300 z-[1003] ${
-            menuOpen ? "max-[1024px]:translate-x-0" : "max-[1024px]:translate-x-full"
+          className={`mx-auto w-[92%] max-w-[1100px] flex items-center justify-between rounded-2xl transition-all duration-300 px-3.5 sm:px-6 ${
+            scrolled
+              ? "bg-[#09090b]/80 border border-white/10 backdrop-blur-2xl shadow-[0_8px_32px_rgba(0,0,0,0.5)] py-2 sm:py-2.5"
+              : "bg-[#09090b]/40 border border-white/5 backdrop-blur-md py-2.5 sm:py-3"
           }`}
         >
-          {["Home", "About", "Services", "Projects", "Contact"].map(
-            (item, idx) => (
+          {/* Logo */}
+          <a href="#home" className="flex items-center gap-2.5 group shrink-0">
+            <div className="relative p-1.5 rounded-xl bg-white/5 border border-white/10 group-hover:border-teal-500/40 transition-colors shrink-0">
+              <img src={logo} alt="Studio Logo" className="w-6 h-6 sm:w-7 sm:h-7 object-contain" />
+            </div>
+            <div className="flex flex-col text-left">
+              <span className="font-bold text-ink text-xs sm:text-sm tracking-tight group-hover:text-teal-400 transition-colors leading-tight">
+                Zain Arif
+              </span>
+              <span className="text-[8px] sm:text-[9px] font-mono text-muted tracking-wider uppercase">
+                Software Studio
+              </span>
+            </div>
+          </a>
+
+          {/* Desktop Nav Items */}
+          <nav className="hidden lg:flex items-center gap-6 xl:gap-8">
+            {NAV_ITEMS.map((item) => (
               <a
-                key={idx}
-                href={`#${item.toLowerCase().replace(" ", "")}`}
-                onClick={() => setMenuOpen(false)}
-                className="relative text-white text-lg py-2 px-4 text-center hover:text-[#12f7d6] group"
+                key={item.label}
+                href={item.href}
+                className="relative text-xs xl:text-sm font-medium text-muted hover:text-ink transition-colors duration-200 group py-1"
               >
-                {item}
-                <span className="absolute left-0 bottom-0 h-[2px] w-0 bg-[#12f7d6] transition-all duration-300 group-hover:w-full"></span>
+                {item.label}
+                <span className="absolute left-0 bottom-0 h-[2px] w-0 bg-gradient-to-r from-emerald-500 to-cyan-400 rounded-full transition-all duration-300 group-hover:w-full" />
               </a>
-            )
-          )}
-        </nav>
+            ))}
+          </nav>
+
+          {/* Desktop Button */}
+          <div className="hidden lg:flex items-center gap-4">
+            <Button href="#contact" variant="primary" size="sm" icon={<FaArrowRight className="text-xs" />}>
+              Start a Project
+            </Button>
+          </div>
+
+          {/* Mobile/Tablet Hamburger Toggle */}
+          <button
+            aria-label="Toggle Navigation Menu"
+            aria-expanded={menuOpen}
+            className="flex flex-col justify-center items-center gap-1.5 w-9 h-9 rounded-xl bg-white/5 border border-white/10 lg:hidden cursor-pointer shrink-0"
+            onClick={() => setMenuOpen(!menuOpen)}
+          >
+            <span className="block w-4 h-[1.5px] bg-white rounded-full" />
+            <span className="block w-4 h-[1.5px] bg-white rounded-full" />
+            <span className="block w-4 h-[1.5px] bg-white rounded-full" />
+          </button>
+        </div>
       </header>
 
+      {/* FULL SCREEN MOBILE DRAWER OVERLAY */}
       <div
-        className={`${
-          menuOpen ? "block" : "hidden"
-        } fixed top-0 left-0 h-screen w-screen bg-[rgba(0,0,0,0.4)] backdrop-blur-sm z-[1001]`}
-        onClick={() => setMenuOpen(false)}
-      ></div>
+        className={`fixed inset-0 w-screen h-screen z-[9999] bg-[#09090b] flex flex-col justify-between p-6 transition-all duration-300 lg:hidden ${
+          menuOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+        }`}
+      >
+        {/* Top Header Inside Drawer */}
+        <div className="flex items-center justify-between w-full">
+          <div className="flex items-center gap-2.5">
+            <div className="p-1.5 rounded-xl bg-white/5 border border-white/10">
+              <img src={logo} alt="Zain Arif Logo" className="w-6 h-6 object-contain" />
+            </div>
+            <div className="flex flex-col text-left">
+              <span className="font-bold text-ink text-xs">Zain Arif</span>
+              <span className="text-[8px] font-mono text-teal-400 uppercase">Software Studio</span>
+            </div>
+          </div>
+
+          {/* Close Button */}
+          <button
+            aria-label="Close Navigation Menu"
+            className="w-9 h-9 flex items-center justify-center rounded-xl bg-white/5 border border-white/10 text-white text-sm"
+            onClick={() => setMenuOpen(false)}
+          >
+            <FaTimes />
+          </button>
+        </div>
+
+        {/* Links Center */}
+        <nav className="flex flex-col gap-3 w-full my-auto">
+          {NAV_ITEMS.map((item) => (
+            <a
+              key={item.label}
+              href={item.href}
+              onClick={() => setMenuOpen(false)}
+              className="text-center text-sm font-medium text-slate-300 hover:text-teal-400 transition-colors py-2.5 rounded-xl bg-white/[0.02] border border-white/5"
+            >
+              {item.label}
+            </a>
+          ))}
+        </nav>
+
+        {/* Bottom CTA Button */}
+        <div className="w-full">
+          <Button
+            href="#contact"
+            variant="primary"
+            size="lg"
+            className="w-full justify-center"
+            onClick={() => setMenuOpen(false)}
+          >
+            Start Project <FaArrowRight className="ml-1 text-xs" />
+          </Button>
+        </div>
+      </div>
     </>
   );
 };
